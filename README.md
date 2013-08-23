@@ -1,0 +1,7 @@
+uidlcompressor
+==============
+When your application and your views get bigger then the amount of data to send from the server to the client increases as well. To render the views Vaadin uses a messaging format called an UIDL to render each view the user sees. This format is basically a JSON object which is sent over the network to the client side rendering engine. But this object can become quite big if there are lots of changes to be rendered and this tends to slow down the loading of the view.
+
+What the UIDL compressor does is it takes the ready made UIDL the Vaadin server side engine has generated, compresses it with GZIP and encodes it to a Base64 string, and then sends it to the client. Then on the client, the client side implementation of the UIDL Compressor decodes and un-compresses the payload and hands it over to the Vaadin client side implementation. Depending on the data sent in the UIDL this can reduce the size of the payload sent to the client by a whopping 80-90%!. You also gain payload obfuscation as a bonus!
+
+Some servlet containers support compressing the network traffic on the container level if you specifically turn it on (apache for instance), in which case using this addon is a bit redundant since the payload already gets compressed. See the link "Compression using filters" for one implementation. But if you do not want to turn it on or cannot either since it is unsupported or you do not manage the server then using this addon will reduce the used network bandwidth significantly. 
